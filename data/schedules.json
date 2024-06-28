@@ -1,0 +1,32 @@
+[
+    {
+        "date": "2024-07-01",
+        "time": "18:00",
+        "opponent": "Orlando Pirates",
+        "venue": "FNB Stadium"
+    },
+    {
+        "date": "2024-07-05",
+        "time": "15:30",
+        "opponent": "Mamelodi Sundowns",
+        "venue": "Loftus Versfeld Stadium"
+    },
+    {
+        "date": "2024-07-10",
+        "time": "20:00",
+        "opponent": "Cape Town City",
+        "venue": "Cape Town Stadium"
+    },
+    {
+        "date": "2024-07-15",
+        "time": "16:00",
+        "opponent": "SuperSport United",
+        "venue": "Lucas Masterpieces Moripe Stadium"
+    },
+    {
+        "date": "2024-07-20",
+        "time": "19:30",
+        "opponent": "Stellenbosch FC",
+        "venue": "Danie Craven Stadium"
+    }
+]

@@ -1,0 +1,13 @@
+{
+  "name": "kaizer-chiefs-assessment-api",
+  "version": "1.0.0",
+  "main": "functions/server.js",
+  "scripts": {
+    "start": "node functions/server.js",
+    "build": "netlify-lambda build functions"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "serverless-http": "^2.7.0"
+  }
+}
