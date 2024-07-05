@@ -1,18 +1,37 @@
 const mysql = require('mysql');
 
-const db = mysql.createConnection({
+const dbConfig = {
     host: 'localhost',
     user: '',
     password: '',
     database: 'chiefs-assessment-db'
-});
+};
 
-db.connect((err) => {
-    if (err) {
-        console.error('Error connecting to the database:', err.stack);
-        return;
-    }
-    console.log('Connected to the database as ID', db.threadId);
-});
+let connection;
 
-module.exports = db;
+function handleDisconnect() {
+
+    connection = mysql.createConnection(dbConfig);
+
+    connection.connect(err => {
+        if (err) {
+            console.error('Error connecting to database:', err);
+            setTimeout(handleDisconnect, 2000); // Retry connection after 2 seconds
+        } else {
+            console.log('Connected to database');
+        }
+    });
+
+    connection.on('error', err => {
+        console.error('Database error:', err);
+        if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+            handleDisconnect(); // Reconnect on connection loss
+        } else {
+            throw err;
+        }
+    });
+}
+
+handleDisconnect();
+
+module.exports = connection;
