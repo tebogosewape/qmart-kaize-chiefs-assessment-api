@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 
 const dbConfig = {
-    host: 'localhost',
+    host: '10.0.0.56',
     user: '',
     password: '',
     database: 'chiefs-assessment-db'
@@ -25,7 +25,7 @@ function handleDisconnect() {
     connection.on('error', err => {
         console.error('Database error:', err);
         if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-            handleDisconnect(); // Reconnect on connection loss
+            handleDisconnect();
         } else {
             throw err;
         }

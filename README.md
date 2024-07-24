@@ -41,6 +41,17 @@ CREATE TABLE `fan-comment-reply` (
 COLLATE='latin1_swedish_ci'
 ENGINE=InnoDB
 ;
+
+CREATE TABLE IF NOT EXISTS network_purchases (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_name VARCHAR(255) NOT NULL,
+    network VARCHAR(10) NOT NULL,
+    purchase_qty INT NOT NULL CHECK (quantity >= 1 AND quantity <= 100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+COLLATE='latin1_swedish_ci'
+ENGINE=InnoDB
+;
 ```
 
 ## Setup Instructions
@@ -232,5 +243,84 @@ Content:
             "created_at": "2024-06-28T12:30:00Z"
         }
     ]
+}
+```
+
+### POST: Purchase sim cards
+URL: /api/simcard
+Method: POST
+Body:
+```js
+{
+    "user_name": "Jon Doe",
+    "simcard_purchase": [
+        {"network": "vc", "quantity": 100},
+        {"network": "dm", "quantity": 2000},
+        {"network": "tm", "quantity": 30},
+        {"network": "mt", "quantity": 40},
+        {"network": "mtn", "quantity": 50},
+        {"network": "hm", "quantity": 60}
+    ]
+}
+```
+
+Validation Response:
+Code: 400
+Content:
+```js
+{
+    "errors": [
+        {
+            "type": "field",
+            "value": [
+                {
+                    "network": "vc",
+                    "quantity": 100
+                },
+                {
+                    "network": "dm",
+                    "quantity": 2000
+                },
+                {
+                    "network": "tm",
+                    "quantity": 30
+                },
+                {
+                    "network": "mt",
+                    "quantity": 40
+                },
+                {
+                    "network": "mtn",
+                    "quantity": 50
+                },
+                {
+                    "network": "hm",
+                    "quantity": 60
+                }
+            ],
+            "msg": "Each network must include a valid network ([\"vc\",\"dm\",\"tm\",\"mt\",\"mtn\",\"hm\"]) and quantity between 1 and 100",
+            "path": "simcard_purchase",
+            "location": "body"
+        }
+    ]
+}
+```
+
+Success Response:
+Code: 201
+Content:
+```js
+{
+    "message": "Purchases added",
+    "ids": 13
+}
+```
+
+Failure Response:
+Code: 500
+Content:
+```js
+{
+    "error": 'Failed to add purchases
 }
 ```
